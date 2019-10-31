@@ -1,15 +1,21 @@
 const gulp = require('gulp');
-const webpack = require('webpack-stream');
+// const webpack = require('webpack-stream');
+const pugLinter = require('gulp-pug-linter');
+const pugLintStylish = require('puglint-stylish');
 
 const sass = require('gulp-sass');
-const minifycss = require('gulp-minify-css');
-const jade = require('gulp-jade');
 const gulpif = require('gulp-if');
 const babel = require('gulp-babel');
 const yargs = require('yargs');
 
 
-gulp.task('hello', () => console.log('Hello, World!'));
+
+gulp.task('lint:template', () => (
+  gulp
+    .src('./**/*.jade')
+    .pipe(pugLinter({ reporter: pugLintStylish }))
+    .pipe(pugLinter({ failAtError:true }))
+));
 
 // gulp.task('default', function() {
 //   return gulp.src('src/entry.js')
