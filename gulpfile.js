@@ -7,7 +7,26 @@ const sass = require('gulp-sass');
 const gulpif = require('gulp-if');
 const babel = require('gulp-babel');
 const yargs = require('yargs');
+const grunt = require('grunt');
 
+grunt.initConfig({
+    copy: {
+        main: {
+            src: 'src/*',
+            dest: 'dest/'
+        }
+    }
+});
+
+grunt.loadNpmTasks('grunt-contrib-copy');
+
+gulp.task('copy', function (done) {
+    grunt.tasks(
+        ['copy:main'],    //you can add more grunt tasks in this array
+        {gruntfile: false}, //don't look for a Gruntfile - there is none. :-)
+        function () {done();}
+    );
+});
 
 
 gulp.task('lint:template', () => (
@@ -17,10 +36,3 @@ gulp.task('lint:template', () => (
     .pipe(pugLinter({ failAtError:true }))
 ));
 
-// gulp.task('default', function() {
-//   return gulp.src('src/entry.js')
-//     .pipe(webpack({
-//       // Any configuration options...
-//     }))
-//     .pipe(gulp.dest('dist/'));
-// });
